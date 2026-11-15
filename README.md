@@ -58,16 +58,21 @@ npm run dev:api                       # http://localhost:3000/api
 npm run dev:web                       # http://localhost:5173
 ```
 
-### Free AI options
-Set these in `backend/.env` (see `backend/.env.example`):
+### AI models with automatic fallback
+The API keeps an ordered chain of models and **switches to the next one automatically** when a provider fails, hits a rate limit or runs out of credits (that provider is skipped for 15 minutes). Works with **zero keys**: the free, keyless [Pollinations](https://pollinations.ai) model is always the last online fallback, then a built-in offline assistant.
 
-| Provider | `AI_BASE_URL` | `AI_MODEL` |
-| --- | --- | --- |
-| OpenAI (ChatGPT) | *(empty)* | `gpt-4.1-nano` |
-| Groq — free | `https://api.groq.com/openai/v1` | `llama-3.3-70b-versatile` |
-| Google Gemini — free | `https://generativelanguage.googleapis.com/v1beta/openai` | `gemini-2.5-flash` |
-| OpenRouter — free models | `https://openrouter.ai/api/v1` | `meta-llama/llama-3.3-70b-instruct:free` |
-| Vercel AI Gateway | use `AI_GATEWAY_API_KEY` instead | `openai/gpt-4.1-nano` |
+`AI_API_KEY / OpenAI` → `Groq` → `Gemini` → `OpenRouter` → `Vercel AI Gateway` → `Pollinations (free, no key)` → `offline`
+
+| Provider | Env var | Default models | Cost |
+| --- | --- | --- | --- |
+| OpenAI (ChatGPT) | `AI_API_KEY` (+ `AI_BASE_URL` for any compatible API) | `gpt-4.1-nano` | paid |
+| Groq | `GROQ_API_KEY` | `llama-3.3-70b-versatile`, `llama-3.1-8b-instant` | free tier |
+| Google Gemini | `GEMINI_API_KEY` | `gemini-2.5-flash`, `gemini-2.5-flash-lite` | free tier |
+| OpenRouter | `OPENROUTER_API_KEY` | `meta-llama/llama-3.3-70b-instruct:free`, `openrouter/free` | free models |
+| Vercel AI Gateway | `AI_GATEWAY_API_KEY` | `openai/gpt-4.1-nano` | free credits (card required) |
+| Pollinations | — | `openai` (GPT-OSS 20B) | free, no key |
+
+See which model answered last: `GET /api/ai/status`.
 
 ## Deploy on Vercel
 
@@ -75,7 +80,7 @@ Set these in `backend/.env` (see `backend/.env.example`):
 
 1. Import this GitHub repo in Vercel (root directory = repo root).
 2. Add a Postgres database from the Vercel Marketplace (Neon or Supabase) — it sets `DATABASE_URL`. Also set `DATABASE_SSL=true`.
-3. Add environment variables: `JWT_SECRET`, and one AI option (`AI_API_KEY` + `AI_BASE_URL` + `AI_MODEL`, or `AI_GATEWAY_API_KEY`).
+3. Add `JWT_SECRET`. AI works with no keys (free Pollinations); optionally add `GROQ_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY` or `AI_API_KEY` for more models.
 4. Deploy. Tables are created automatically on first start (`DATABASE_SYNCHRONIZE=true`).
 
 ---
@@ -98,7 +103,7 @@ cp backend/.env.example backend/.env   # defina JWT_SECRET e uma chave de IA
 npm run dev:api
 npm run dev:web                         # abra http://localhost:5173
 ```
-Sem chave de IA, o app usa um assistente offline embutido — tudo continua funcionando.
+Sem nenhuma chave, a IA usa a Pollinations (grátis, sem cadastro). Adicione chaves grátis do Groq/Gemini/OpenRouter: quando um modelo fica sem créditos ou cai, o próximo assume automaticamente.
 
 ### Deploy na Vercel
 Importe o repositório na Vercel, adicione um Postgres pelo Marketplace (Neon/Supabase), defina `JWT_SECRET`, `DATABASE_SSL=true` e a chave de IA, e faça o deploy.

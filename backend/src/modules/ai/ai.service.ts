@@ -1,11 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { generateText as aiGenerateText, type LanguageModel, type ModelMessage } from 'ai';
-import { createOpenAI } from '@ai-sdk/openai';
-import { EnvironmentVariables } from '../../config/environmentVariables.js';
+import { generateText as aiGenerateText, type ModelMessage } from 'ai';
 import { QuestionnaireService } from '../questionnaire/questionnaire.service.js';
 import { forms, levels, type Language } from '../../data/forms.js';
 import { offlineChatAnswer, offlineQuestionnaireAnswer } from './offline.js';
+import { buildProviderChain, isQuotaError, toPlainText, type AiProvider } from './providers.js';
 
 export interface QuestionnaireAnswer {
   questionId: number;
@@ -19,57 +17,89 @@ export interface FormattedAnswer {
 
 export type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
-type ProviderMode = 'gateway' | 'openai-compatible' | 'offline';
+interface RunInput {
+  instructions: string;
+  prompt?: string;
+  messages?: ChatMessage[];
+}
+
+const COOLDOWN_QUOTA_MS = 15 * 60 * 1000; // out of credits / rate limited
+const COOLDOWN_ERROR_MS = 60 * 1000; // other failures
+const TIMEOUT_MS = Number(process.env.AI_TIMEOUT_MS) || 25_000;
 
 @Injectable()
 export class AiService {
   private readonly logger = new Logger(AiService.name);
-  private readonly mode: ProviderMode;
-  private readonly model: LanguageModel | null;
-  readonly modelName: string;
+  private readonly chain: AiProvider[];
+  /** provider key -> timestamp until which it is skipped */
+  private readonly cooldown = new Map<string, number>();
+  private lastUsed: string | null = null;
 
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly questionnaireService: QuestionnaireService,
-  ) {
-    const get = (k: EnvironmentVariables) => this.configService.get<string>(k)?.trim() || undefined;
-    const gatewayKey = get(EnvironmentVariables.AI_GATEWAY_API_KEY) || process.env.VERCEL_OIDC_TOKEN;
-    const apiKey = get(EnvironmentVariables.AI_API_KEY) || get(EnvironmentVariables.OPENAI_API_KEY);
-    const baseURL = get(EnvironmentVariables.AI_BASE_URL);
-    const configuredModel = get(EnvironmentVariables.AI_MODEL);
-
-    if (apiKey) {
-      // OpenAI or any OpenAI-compatible free API (Groq, OpenRouter, Gemini, Ollama...)
-      this.mode = 'openai-compatible';
-      this.modelName = configuredModel || 'gpt-4.1-nano';
-      const provider = createOpenAI({ apiKey, baseURL });
-      this.model = baseURL ? provider.chat(this.modelName) : provider(this.modelName);
-    } else if (gatewayKey) {
-      // Vercel AI Gateway: plain "provider/model" string
-      this.mode = 'gateway';
-      this.modelName = configuredModel || 'openai/gpt-4.1-nano';
-      this.model = this.modelName;
-    } else {
-      this.mode = 'offline';
-      this.modelName = 'offline';
-      this.model = null;
-      this.logger.warn('No AI key configured — using the built-in offline assistant.');
-    }
-    this.logger.log(`AI provider: ${this.mode} (${this.modelName})`);
+  constructor(private readonly questionnaireService: QuestionnaireService) {
+    this.chain = buildProviderChain();
+    this.logger.log(
+      `AI chain: ${this.chain.map((p) => `${p.name}:${p.model}`).join(' → ') || '(none)'} → offline`,
+    );
   }
 
   get status() {
-    return { mode: this.mode, model: this.modelName };
+    const now = Date.now();
+    return {
+      mode: this.chain.length ? 'online' : 'offline',
+      lastUsed: this.lastUsed,
+      chain: [
+        ...this.chain.map((p) => ({
+          provider: p.name,
+          model: p.model,
+          available: (this.cooldown.get(this.key(p)) ?? 0) <= now,
+        })),
+        { provider: 'offline', model: 'built-in', available: true },
+      ],
+    };
+  }
+
+  private key(p: AiProvider) {
+    return `${p.name}:${p.model}`;
+  }
+
+  /** Tries each model in order; skips ones cooling down; returns null if all fail. */
+  private async run(input: RunInput): Promise<string | null> {
+    const now = Date.now();
+    for (const provider of this.chain) {
+      const key = this.key(provider);
+      if ((this.cooldown.get(key) ?? 0) > now) continue;
+      try {
+        const result = await aiGenerateText({
+          model: provider.instance,
+          instructions: input.instructions,
+          ...(input.messages
+            ? { messages: input.messages as ModelMessage[] }
+            : { prompt: input.prompt ?? '' }),
+          maxRetries: 0,
+          abortSignal: AbortSignal.timeout(TIMEOUT_MS),
+        });
+        const text = toPlainText(result.text ?? '');
+        if (!text) throw new Error('Empty response');
+        this.cooldown.delete(key);
+        this.lastUsed = key;
+        return text;
+      } catch (error) {
+        const quota = isQuotaError(error);
+        this.cooldown.set(key, Date.now() + (quota ? COOLDOWN_QUOTA_MS : COOLDOWN_ERROR_MS));
+        this.logger.warn(
+          `AI ${key} failed (${quota ? 'quota/limit' : 'error'}): ${(error as Error).message?.slice(0, 160)} — trying next model`,
+        );
+      }
+    }
+    this.lastUsed = 'offline';
+    return null;
   }
 
   async generateText(text: string, systemPrompt: string): Promise<string> {
-    if (!this.model) return offlineChatAnswer([{ role: 'user', content: text }], 'en');
-    const response = await aiGenerateText({
-      model: this.model,
-      instructions: systemPrompt,
-      prompt: text,
-    });
-    return response.text;
+    return (
+      (await this.run({ instructions: systemPrompt, prompt: text })) ??
+      offlineChatAnswer([{ role: 'user', content: text }], 'en')
+    );
   }
 
   async generateChatMessage(
@@ -77,18 +107,10 @@ export class AiService {
     systemPrompt: string,
     language: Language = 'en',
   ): Promise<string> {
-    if (!this.model) return offlineChatAnswer(messages, language);
-    try {
-      const response = await aiGenerateText({
-        model: this.model,
-        messages: messages as ModelMessage[],
-        instructions: systemPrompt,
-      });
-      return response.text;
-    } catch (error) {
-      this.logger.error(`AI chat failed: ${(error as Error).message}`);
-      return offlineChatAnswer(messages, language);
-    }
+    return (
+      (await this.run({ instructions: systemPrompt, messages })) ??
+      offlineChatAnswer(messages, language)
+    );
   }
 
   async GenerateQuestionnaireTextResponse(
@@ -125,18 +147,16 @@ export class AiService {
       `The user's sustainability score is ${questionnaire.score}/100 (level: ${level?.name[language]}). ` +
       `Structure: one short opening sentence about their profile, then 3 to 5 numbered recommendations ` +
       `focused on the weakest habits, each with an estimated environmental impact, then one motivating closing line. ` +
-      `Use a few emojis. Write in plain text without markdown formatting. Answer ONLY in ${languageName}.`;
+      `Use a few emojis. Keep it under 250 words. Write in plain text without markdown formatting. Answer ONLY in ${languageName}.`;
 
-    let response: string;
-    if (!this.model) {
-      response = offlineQuestionnaireAnswer(questionnaire.answers, questionnaire.score, language);
-    } else {
-      try {
-        response = await this.generateText(JSON.stringify(formattedAnswers), systemPrompt);
-      } catch (error) {
-        this.logger.error(`AI questionnaire analysis failed: ${(error as Error).message}`);
-        return offlineQuestionnaireAnswer(questionnaire.answers, questionnaire.score, language);
-      }
+    const response = await this.run({
+      instructions: systemPrompt,
+      prompt: JSON.stringify(formattedAnswers),
+    });
+
+    if (!response) {
+      // Don't cache the offline text, so a real AI analysis is generated once a model is available again
+      return offlineQuestionnaireAnswer(questionnaire.answers, questionnaire.score, language);
     }
 
     await this.questionnaireService.saveAiResponse(questionnaire.id, language, response);
