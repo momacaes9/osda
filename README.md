@@ -80,7 +80,7 @@ See which model answered last: `GET /api/ai/status`.
 
 Live at **https://osda-tau.vercel.app** — one Vercel project using **Vercel Services** (`vercel.json`): the Vite app at `/` and the NestJS API at `/api`.
 
-1. Import this GitHub repo in Vercel (root directory = repo root). Connect it under Project → Settings → Git to deploy on every push to `main` (until then, deploy with `vercel deploy --prod`).
+1. Import this GitHub repo in Vercel (root directory = repo root). Auto-deploy: the GitHub Action `.github/workflows/deploy.yml` publishes on every push to `main` once the `VERCEL_TOKEN` repo secret is set (repo variables `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` are already configured).
 2. Database: any Postgres. Production uses a free **Supabase** project with a private `osda` schema (not exposed by the Supabase public REST API). Set `DATABASE_URL` (Supabase transaction pooler, port 6543), `DATABASE_SCHEMA=osda` and `DATABASE_SSL=true`.
 3. Set `JWT_SECRET` (`openssl rand -hex 32`) and `VERCEL_FORCE_NO_BUILD_CACHE=1`.
 4. AI works with no keys (free Pollinations). Optionally add `GROQ_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY` or `AI_API_KEY` for more models in the fallback chain.
@@ -109,7 +109,7 @@ npm run dev:web                         # abra http://localhost:5173
 Sem nenhuma chave, a IA usa a Pollinations (grátis, sem cadastro). Adicione chaves grátis do Groq/Gemini/OpenRouter: quando um modelo fica sem créditos ou cai, o próximo assume automaticamente.
 
 ### Deploy na Vercel
-No ar em **https://osda-tau.vercel.app**. Banco: Supabase grátis (schema privado `osda`). Para publicar a cada push na `main`, conecte o GitHub em Project → Settings → Git (até lá: `vercel deploy --prod`). Defina `DATABASE_URL`, `DATABASE_SCHEMA=osda`, `DATABASE_SSL=true` e `JWT_SECRET`; a IA funciona sem chave e usa Groq/Gemini/OpenRouter se você adicionar as chaves grátis.
+No ar em **https://osda-tau.vercel.app**. Banco: Supabase grátis (schema privado `osda`). Cada push na `main` publica via GitHub Action, depois que o secret `VERCEL_TOKEN` for adicionado no repositório. Defina `DATABASE_URL`, `DATABASE_SCHEMA=osda`, `DATABASE_SSL=true` e `JWT_SECRET`; a IA funciona sem chave e usa Groq/Gemini/OpenRouter se você adicionar as chaves grátis.
 
 ---
 
