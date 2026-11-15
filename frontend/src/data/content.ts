@@ -209,3 +209,49 @@ export const carbonCategories: Record<string, L> = {
   shopping: { en: 'Shopping', pt: 'Compras' },
   waste: { en: 'Waste', pt: 'Resíduos' },
 };
+
+/* ---------------- Business plan (public summary — full plan on request) ---------------- */
+export const businessPlan: { title: L; text: L }[] = [
+  {
+    title: { en: 'Mission', pt: 'Missão' },
+    text: {
+      en: 'Build a global community that offsets its carbon emissions through small daily changes — without radical lifestyle shifts — and saves money while doing it.',
+      pt: 'Construir uma comunidade global que compense suas emissões com pequenas mudanças diárias — sem mudanças radicais de estilo de vida — e economize dinheiro no caminho.',
+    },
+  },
+  {
+    title: { en: 'Model', pt: 'Modelo' },
+    text: {
+      en: 'Social enterprise run as a 4-founder partnership. Profits are reinvested in the project, and part can be donated to environmental institutions.',
+      pt: 'Empresa social em parceria entre 4 fundadoras. Os lucros são reinvestidos no projeto, e parte pode ser doada a instituições ambientais.',
+    },
+  },
+  {
+    title: { en: 'Revenue streams', pt: 'Fontes de receita' },
+    text: {
+      en: 'Social media monetization, optional user donations, eco-friendly affiliate links and paid events or webinars — with a lean, low-cost AI infrastructure.',
+      pt: 'Monetização das redes sociais, doações opcionais, links de afiliados de produtos sustentáveis e eventos ou webinars pagos — com uma infraestrutura de IA enxuta e de baixo custo.',
+    },
+  },
+  {
+    title: { en: 'Market', pt: 'Mercado' },
+    text: {
+      en: 'Starting with urban middle-class Brazilians in São Paulo, expanding worldwide through Instagram Reels, YouTube Shorts and online partnerships.',
+      pt: 'Começando pela classe média urbana de São Paulo e expandindo para o mundo via Reels, YouTube Shorts e parcerias online.',
+    },
+  },
+  {
+    title: { en: 'Roadmap', pt: 'Próximos passos' },
+    text: {
+      en: 'Mobile apps (iOS & Android), community forum, progress tracking, eco-store with CO2-based discounts, and expansion to TikTok, LinkedIn and Pinterest.',
+      pt: 'Apps para iOS e Android, fórum da comunidade, acompanhamento da evolução, loja eco com descontos baseados em CO2 e expansão para TikTok, LinkedIn e Pinterest.',
+    },
+  },
+  {
+    title: { en: 'Impact', pt: 'Impacto' },
+    text: {
+      en: 'Aligned with UN SDGs 11, 12 and 13. Two hands-on community events per year at fairs such as Eco Expo and IFAT Brasil.',
+      pt: 'Alinhado aos ODS 11, 12 e 13 da ONU. Dois eventos presenciais por ano em feiras como Eco Expo e IFAT Brasil.',
+    },
+  },
+];

@@ -7,6 +7,7 @@ import {
   awards,
   competitors,
   BLOG_FORM,
+  businessPlan,
   CONTACT_EMAIL,
   FOUNDER_EMAIL,
   INSTAGRAM_POSTS,
@@ -264,6 +265,31 @@ export function Home() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- Business plan ---------------- */}
+      <section id="business-plan" className="section">
+        <div className="container">
+          <SectionHead kicker={t.plan.kicker} title={t.plan.title} lead={t.plan.lead} />
+          <div className="plan-grid">
+            {businessPlan.map((p, i) => (
+              <div className="plan-item" key={p.title.en}>
+                <span className="plan-n">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{p.title[language]}</h3>
+                <p className="muted">{p.text[language]}</p>
+              </div>
+            ))}
+          </div>
+          <div className="plan-cta">
+            <a
+              className="btn btn-primary btn-lg"
+              href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t.plan.subject)}&body=${t.plan.body}`}
+            >
+              <IconBook size={20} /> {t.plan.cta}
+            </a>
+            <span className="muted small">{t.plan.note}</span>
           </div>
         </div>
       </section>

@@ -433,3 +433,17 @@ input[type='range']::-moz-range-thumb { width: 18px; height: 18px; border-radius
 .member-school strong { color: var(--text); font-weight: 600; }
 .member-school span { color: var(--muted); }
 .email-label { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: -6px; }
+
+/* ---------- Business plan ---------- */
+.plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--border); }
+.plan-item { padding: 26px 24px 26px 0; border-bottom: 1px solid var(--border); }
+.plan-item:not(:nth-child(3n)) { border-right: 1px solid var(--border); }
+.plan-item:not(:nth-child(3n + 1)) { padding-left: 24px; }
+.plan-item h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; margin: 8px 0 6px; }
+.plan-item p { margin: 0; font-size: .93rem; }
+.plan-n { font-family: var(--serif); color: var(--accent); font-size: .95rem; }
+.plan-cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
+@media (max-width: 860px) {
+  .plan-grid { grid-template-columns: 1fr; }
+  .plan-item, .plan-item:not(:nth-child(3n + 1)) { padding: 22px 0; border-right: 0 !important; }
+}
