@@ -25,6 +25,8 @@ import { Questionnaire } from './modules/questionnaire/questionnaire.entity.js';
         return {
           type: 'postgres' as const,
           url,
+          // Use a private schema on Supabase so tables are not exposed by its public REST API
+          schema: config.get<string>(EnvironmentVariables.DATABASE_SCHEMA) || undefined,
           ssl: ssl ? { rejectUnauthorized: false } : false,
           entities: [User, UserAuthentication, Questionnaire],
           // Creates/updates tables automatically. Set DATABASE_SYNCHRONIZE=false once you add migrations.

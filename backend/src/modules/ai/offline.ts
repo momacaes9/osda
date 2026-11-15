@@ -17,14 +17,14 @@ const topics: { keywords: string[]; en: string; pt: string }[] = [
     pt: '💡 Tire da tomada os aparelhos que não está usando, troque para lâmpadas LED e aproveite a luz natural. Filtros de linha com interruptor facilitam — você pode economizar até 10% na conta de luz.',
   },
   {
-    keywords: ['recycl', 'trash', 'waste', 'garbage', 'compost', 'recicl', 'lixo', 'resíduo', 'residuo', 'composta'],
-    en: '♻️ Start with two bins: recyclables and organic waste. Rinse packaging before recycling and try composting food scraps — it can halve your household waste.',
-    pt: '♻️ Comece com duas lixeiras: recicláveis e orgânicos. Lave as embalagens antes de reciclar e experimente compostar restos de comida — isso pode reduzir pela metade o lixo de casa.',
-  },
-  {
     keywords: ['battery', 'batteries', 'pilha', 'bateria', 'eletrônico', 'eletronico', 'e-waste'],
     en: '🔋 Never throw batteries in the regular trash — they leak heavy metals. Keep a small box at home and drop them at a collection point (supermarkets and electronics stores usually have one).',
     pt: '🔋 Nunca jogue pilhas no lixo comum — elas liberam metais pesados. Tenha uma caixinha em casa e leve a um ponto de coleta (supermercados e lojas de eletrônicos costumam ter).',
+  },
+  {
+    keywords: ['recycl', 'trash', 'waste', 'garbage', 'compost', 'recicl', 'lixo', 'resíduo', 'residuo', 'composta'],
+    en: '♻️ Start with two bins: recyclables and organic waste. Rinse packaging before recycling and try composting food scraps — it can halve your household waste.',
+    pt: '♻️ Comece com duas lixeiras: recicláveis e orgânicos. Lave as embalagens antes de reciclar e experimente compostar restos de comida — isso pode reduzir pela metade o lixo de casa.',
   },
   {
     keywords: ['food', 'meat', 'vegan', 'vegetarian', 'diet', 'comida', 'carne', 'vegano', 'vegetariano', 'alimenta'],
