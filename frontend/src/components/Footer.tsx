@@ -16,7 +16,7 @@ export function Footer() {
           <a href={`mailto:${CONTACT_EMAIL}`} aria-label={CONTACT_EMAIL}><IconMail size={22} /></a>
         </div>
         <p className="footer-quote">“{t.footer}”</p>
-        <p className="muted small">OSDA — One Step Drives All · Um Passo Impulsiona Tudo · São Paulo, Brasil</p>
+        <p className="muted small">OSDA AI · OSDA Global — One Step Drives All · Um Passo Impulsiona Tudo · São Paulo, Brasil 🇧🇷</p>
         <p className="muted small">{CONTACT_EMAIL}</p>
       </div>
     </footer>

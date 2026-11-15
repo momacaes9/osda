@@ -6,7 +6,7 @@ export const CONTACT_EMAIL = 'osda.ambientalglobal@gmail.com';
 export const YOUTUBE_CHANNEL = 'https://www.youtube.com/@OSDA_IA';
 
 /* ---------------- Recognition ---------------- */
-export type AwardIcon = 'medal' | 'trophy' | 'globe' | 'mic' | 'book' | 'star';
+export type AwardIcon = 'medal' | 'trophy' | 'globe' | 'mic' | 'book' | 'star' | 'rocket';
 export interface Award {
   icon: AwardIcon;
   year: string;
@@ -21,11 +21,11 @@ export const awards: Award[] = [
     icon: 'medal',
     year: '2026',
     highlight: true,
-    title: { en: 'Bronze Award', pt: 'Prêmio Bronze' },
+    title: { en: 'Top 16 · Bronze Award', pt: 'Top 16 · Prêmio Bronze' },
     org: { en: 'GYC — The Global Youth Challenge', pt: 'GYC — The Global Youth Challenge' },
     detail: {
-      en: 'Judged by University of Toronto (OISE · Encore Lab), Brock University, University of Waterloo and Erindale Academy.',
-      pt: 'Avaliado por University of Toronto (OISE · Encore Lab), Brock University, University of Waterloo e Erindale Academy.',
+      en: 'Among the 16 best projects. Judged by University of Toronto (OISE · Encore Lab), Brock University, University of Waterloo and Erindale Academy.',
+      pt: 'Entre os 16 melhores projetos. Avaliado por University of Toronto (OISE · Encore Lab), Brock University, University of Waterloo e Erindale Academy.',
     },
   },
   {
@@ -45,25 +45,21 @@ export const awards: Award[] = [
     detail: { en: 'Pitch selected for the Latin American final.', pt: 'Pitch selecionado para a final latino-americana.' },
   },
   {
-    icon: 'trophy',
-    year: '2025',
-    title: { en: 'Regional stage', pt: 'Etapa regional' },
-    org: { en: 'Technovation Girls', pt: 'Technovation Girls' },
-    detail: { en: 'Pitch and technical videos of the OSDA app.', pt: 'Vídeos de pitch e técnico do app OSDA.' },
-  },
-  {
     icon: 'book',
-    year: '2025',
-    title: { en: 'Research poster showcase', pt: 'Apresentação de pôster científico' },
-    org: { en: 'Mizzou Academy · University of Missouri', pt: 'Mizzou Academy · University of Missouri' },
-    detail: { en: 'Action research with 152 respondents.', pt: 'Pesquisa-ação com 152 respondentes.' },
-  },
-  {
-    icon: 'star',
     year: '2024',
     title: { en: 'Outstanding award', pt: 'Prêmio de destaque' },
-    org: { en: 'ESPM — high school research showcase', pt: 'ESPM — mostra de pesquisa do ensino médio' },
-    detail: { en: 'Where it all started, as the project "ONG".', pt: 'Onde tudo começou, ainda como o projeto "ONG".' },
+    org: { en: 'ESPM × Mizzou Academy (University of Missouri)', pt: 'ESPM × Mizzou Academy (University of Missouri)' },
+    detail: {
+      en: 'Joint research poster showcase — where it all started, as the project "ONG". Action research with 152 respondents.',
+      pt: 'Mostra conjunta de pôsteres científicos — onde tudo começou, ainda como o projeto "ONG". Pesquisa-ação com 152 respondentes.',
+    },
+  },
+  {
+    icon: 'rocket',
+    year: '2025',
+    title: { en: 'Participants', pt: 'Participantes' },
+    org: { en: 'Technovation Girls', pt: 'Technovation Girls' },
+    detail: { en: 'Built and pitched the OSDA app — pitch and technical videos.', pt: 'Criamos e apresentamos o app OSDA — vídeos de pitch e técnico.' },
   },
 ];
 
@@ -112,11 +108,10 @@ export const competitors: { name: string; has: boolean[] }[] = [
 ];
 
 /* ---------------- UN SDGs ---------------- */
-export const sdgs: { n: number; color: string; title: L }[] = [
-  { n: 11, color: '#FD9D24', title: { en: 'Sustainable cities and communities', pt: 'Cidades e comunidades sustentáveis' } },
-  { n: 12, color: '#BF8B2E', title: { en: 'Responsible consumption and production', pt: 'Consumo e produção responsáveis' } },
-  { n: 13, color: '#3F7E44', title: { en: 'Climate action', pt: 'Ação contra a mudança global do clima' } },
-  { n: 14, color: '#0A97D9', title: { en: 'Life below water', pt: 'Vida na água' } },
+export const sdgs: { n: number; img: string; title: L }[] = [
+  { n: 11, img: '/sdg/sdg-11.jpg', title: { en: 'Sustainable cities and communities', pt: 'Cidades e comunidades sustentáveis' } },
+  { n: 12, img: '/sdg/sdg-12.jpg', title: { en: 'Responsible consumption and production', pt: 'Consumo e produção responsáveis' } },
+  { n: 13, img: '/sdg/sdg-13.jpg', title: { en: 'Climate action', pt: 'Ação contra a mudança global do clima' } },
 ];
 
 /* ---------------- Coming next ---------------- */

@@ -13,6 +13,7 @@ const en = {
       chatCta: 'Talk to the AI',
       community: 'Join a community committed to a more sustainable future',
       motto: 'One Step Drives All',
+      tagline: 'An international environmental engineering project led by young Brazilian women',
     },
     how: {
       title: 'How it works',
@@ -154,6 +155,7 @@ const pt: Translation = {
       chatCta: 'Conversar com a IA',
       community: 'Junte-se a uma comunidade comprometida com um futuro mais sustentável',
       motto: 'Um Passo Impulsiona Tudo',
+      tagline: 'Projeto internacional de engenharia ambiental liderado por jovens brasileiras',
     },
     how: {
       title: 'Como funciona',

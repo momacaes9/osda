@@ -1,4 +1,4 @@
-import { useState, type ComponentType, type SVGProps } from 'react';
+import { Fragment, useState, type ComponentType, type SVGProps } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { askChat } from '@/components/ChatBot';
@@ -21,12 +21,12 @@ import { Decor } from '@/components/Decor';
 import { LiteYouTube } from '@/components/LiteYouTube';
 import {
   IconArrow, IconBook, IconCheck, IconCopy, IconGauge, IconGlobe, IconHandshake, IconHeart, IconLeaf,
-  IconMail, IconMedal, IconMic, IconPlay, IconSpark, IconStar, IconStore, IconTrophy, IconUsers, IconX,
+  IconMail, IconMedal, IconMic, IconPlay, IconRocket, IconSpark, IconStar, IconStore, IconTrophy, IconUsers, IconX,
 } from '@/components/Icons';
 
 type Icon = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
 const awardIcons: Record<AwardIcon, Icon> = {
-  medal: IconMedal, trophy: IconTrophy, globe: IconGlobe, mic: IconMic, book: IconBook, star: IconStar,
+  medal: IconMedal, trophy: IconTrophy, globe: IconGlobe, mic: IconMic, book: IconBook, star: IconStar, rocket: IconRocket,
 };
 const futureIcons: Record<FutureIcon, Icon> = { store: IconStore, handshake: IconHandshake, heart: IconHeart, users: IconUsers };
 const benefitIcons: Icon[] = [IconGauge, IconLeaf, IconSpark, IconGlobe];
@@ -56,7 +56,7 @@ export function Home() {
     }
   };
 
-  const marqueeItems = awards.map((a) => `${a.org[language]} — ${a.title[language]}`);
+  const marqueeItems = awards.filter((a) => a.icon !== 'rocket').map((a) => `${a.org[language]} — ${a.title[language]}`);
 
   return (
     <>
@@ -65,7 +65,7 @@ export function Home() {
         <Decor variant="a" />
         <div className="container hero-grid">
           <div>
-            <span className="eyebrow"><span className="dot" />{t.hero.motto}</span>
+            <span className="eyebrow"><span aria-hidden="true">🇧🇷</span>{t.hero.tagline}</span>
             <h1>
               {t.hero.title1} <em>{t.hero.title2}</em> {t.hero.title3}
             </h1>
@@ -84,12 +84,11 @@ export function Home() {
               <div><strong>{research.respondents}</strong><span>{s.researchLead}</span></div>
               <div><strong>{research.reach}</strong><span>{s.reach}</span></div>
               <div><strong>Top 10</strong><span>Global Innovation Challenge</span></div>
+              <div><strong>Top 16</strong><span>Global Youth Challenge</span></div>
             </div>
           </div>
           <div className="hero-medal">
-            <span className="ring" />
-            <img src="/logo.jpg" alt="OSDA" width={320} height={320} fetchPriority="high" />
-            <span className="badge-float"><IconMedal size={20} /> GYC 2026 · Bronze</span>
+            <img src="/logo.jpg" alt="OSDA — One Step Drives All" width={320} height={320} fetchPriority="high" />
           </div>
         </div>
       </section>
@@ -269,19 +268,14 @@ export function Home() {
       <section id="sdg" className="section">
         <div className="container">
           <SectionHead kicker={s.sdg} title={s.sdgTitle} />
-          <div className="sdgs">
-            {sdgs.map((g) => (
-              <a
-                key={g.n}
-                className="sdg"
-                style={{ background: g.color }}
-                href={`https://sdgs.un.org/goals/goal${g.n}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="sdg-n">{g.n}</span>
-                <span className="sdg-t">{g.title[language]}</span>
-              </a>
+          <div className="sdg-row">
+            {sdgs.map((g, i) => (
+              <Fragment key={g.n}>
+                {i > 0 ? <span className="sdg-plus" aria-hidden="true">+</span> : null}
+                <a className="sdg-tile" href={`https://sdgs.un.org/goals/goal${g.n}`} target="_blank" rel="noopener noreferrer">
+                  <img src={g.img} alt={`SDG ${g.n} — ${g.title[language]}`} width={302} height={302} loading="lazy" />
+                </a>
+              </Fragment>
             ))}
           </div>
         </div>
@@ -290,7 +284,7 @@ export function Home() {
       {/* ---------------- Team ---------------- */}
       <section id="team" className="section">
         <div className="container">
-          <SectionHead kicker={s.team} title={t.team.title} lead={t.team.subtitle} />
+          <SectionHead kicker={s.team} title={t.team.title} lead={`${t.hero.tagline} 🇧🇷`} />
           <div className="team-grid">
             {team.map((m) => (
               <a

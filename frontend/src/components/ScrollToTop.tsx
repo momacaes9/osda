@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const TITLES: Record<string, { en: string; pt: string }> = {
-  '/': { en: 'OSDA — One Step Drives All · Sustainability with AI', pt: 'OSDA — Um Passo Impulsiona Tudo · Sustentabilidade com IA' },
+  '/': { en: 'OSDA AI — One Step Drives All · OSDA Global sustainability with AI', pt: 'OSDA AI — One Step Drives All · Sustentabilidade com IA' },
   '/questionnaire': { en: 'CO2 footprint calculator & sustainability quiz · OSDA', pt: 'Calculadora de pegada de carbono e quiz · OSDA' },
   '/chat': { en: 'AI sustainability assistant · OSDA', pt: 'Assistente de sustentabilidade com IA · OSDA' },
   '/login': { en: 'Log in · OSDA', pt: 'Entrar · OSDA' },

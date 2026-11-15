@@ -16,7 +16,7 @@ function detectLanguage(): Language {
   } catch {
     /* storage unavailable */
   }
-  return navigator.language?.toLowerCase().startsWith('pt') ? 'pt' : 'en';
+  return 'en'; // default (auto) language is English; the EN/PT toggle is remembered
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
