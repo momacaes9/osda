@@ -4,7 +4,7 @@ type L = Record<Language, string>;
 
 export const CONTACT_EMAIL = 'osda.ambientalglobal@gmail.com';
 export const FOUNDER_EMAIL = 'monicagrenadier@gmail.com';
-export const VOLUNTEER_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc-qMv-SE1B3E_nBGBgKBMxmzSVJX7xLwxTFJZlWeV5WkBvPw/viewform';
+export const VOLUNTEER_FORM = 'https://forms.gle/x9BjNRFnRkv9Ln8H9';
 export const BLOG_FORM = 'https://forms.gle/GTza8ibVgH9oCC9H9';
 export const INSTAGRAM_POSTS = '100+';
 export const YOUTUBE_CHANNEL = 'https://www.youtube.com/@OSDA_IA';

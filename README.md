@@ -8,7 +8,7 @@
 
 🏆 **GYC 2026 — Top 16 · Bronze** · 🌍 **Global Innovation Challenge — Top 10 world, #2 LATAM** · 🎤 **PFF25 — LATAM finalist** · 📚 **ESPM × Mizzou Academy — Outstanding award**
 
-🙋 **Volunteers wanted** (high schoolers worldwide, free, until Feb 2027): [apply here](https://docs.google.com/forms/d/e/1FAIpQLSc-qMv-SE1B3E_nBGBgKBMxmzSVJX7xLwxTFJZlWeV5WkBvPw/viewform) · ✍️ [Write a blog post](https://forms.gle/GTza8ibVgH9oCC9H9) · 📧 osda.ambientalglobal@gmail.com · monicagrenadier@gmail.com
+🙋 **Volunteers wanted** (high schoolers worldwide, free, until Feb 2027): [apply here](https://forms.gle/x9BjNRFnRkv9Ln8H9) · ✍️ [Write a blog post](https://forms.gle/GTza8ibVgH9oCC9H9) · 📧 osda.ambientalglobal@gmail.com · monicagrenadier@gmail.com
 
 OSDA personalizes sustainability tips based on your lifestyle. Answer a 10-question assessment, get a score from 0 to 100, your level (Beginner → Expert), personalized tips, an AI analysis, and chat with a sustainability assistant — in **English and Portuguese**.
 
