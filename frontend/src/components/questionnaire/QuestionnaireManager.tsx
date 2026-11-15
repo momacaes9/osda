@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { FormQuestion } from '@/services/types';
+import { DEFAULT_CARBON_INPUTS, type CarbonInputs } from '@/data/carbon';
 
 interface QuestionnaireContextType {
   questions: FormQuestion[];
@@ -11,6 +12,10 @@ interface QuestionnaireContextType {
   setAnswer: (questionId: number, answer: string) => void;
   isLastQuestion: boolean;
   isFirstQuestion: boolean;
+  phase: 'habits' | 'carbon';
+  setPhase: (p: 'habits' | 'carbon') => void;
+  carbon: CarbonInputs;
+  setCarbon: <K extends keyof CarbonInputs>(key: K, value: CarbonInputs[K]) => void;
 }
 
 const QuestionnaireContext = createContext<QuestionnaireContextType | undefined>(undefined);
@@ -33,6 +38,10 @@ export function QuestionnaireManager({ questions, children }: QuestionnaireManag
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const totalQuestions = questions.length;
+  const [phase, setPhase] = useState<'habits' | 'carbon'>('habits');
+  const [carbon, setCarbonState] = useState<CarbonInputs>(DEFAULT_CARBON_INPUTS);
+  const setCarbon = <K extends keyof CarbonInputs>(key: K, value: CarbonInputs[K]) =>
+    setCarbonState((prev) => ({ ...prev, [key]: value }));
 
   const goToNextQuestion = () => setCurrentQuestion((q) => Math.min(q + 1, totalQuestions - 1));
   const goToPreviousQuestion = () => setCurrentQuestion((q) => Math.max(q - 1, 0));
@@ -51,6 +60,10 @@ export function QuestionnaireManager({ questions, children }: QuestionnaireManag
         setAnswer,
         isLastQuestion: currentQuestion === totalQuestions - 1,
         isFirstQuestion: currentQuestion === 0,
+        phase,
+        setPhase,
+        carbon,
+        setCarbon,
       }}
     >
       {children}

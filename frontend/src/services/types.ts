@@ -1,4 +1,5 @@
 import type { Language } from '@/i18n/translations';
+import type { CarbonResult } from '@/data/carbon';
 
 export type Localized = Record<Language, string>;
 
@@ -45,6 +46,10 @@ export interface QuestionnaireResult {
   score: number;
   level: string;
   aiResponse: Partial<Record<Language, string>> | null;
+  carbonInputs: Record<string, unknown> | null;
+  carbonResult: CarbonResult | null;
+  footprintKg: number | null;
+  profile: string | null;
   userId: number | null;
   createdAt: string;
 }

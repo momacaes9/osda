@@ -28,6 +28,21 @@ export class Questionnaire {
   @Column({ type: 'varchar', length: 20, default: 'beginner' })
   level: string;
 
+  /** Inputs of the CO2 calculator (km, kWh, meals...) */
+  @Column({ type: 'jsonb', name: 'carbon_inputs', nullable: true })
+  carbonInputs: Record<string, unknown> | null;
+
+  /** Estimated footprint in kg CO2e per year + breakdown */
+  @Column({ type: 'jsonb', name: 'carbon_result', nullable: true })
+  carbonResult: Record<string, unknown> | null;
+
+  @Column({ type: 'int', name: 'footprint_kg', nullable: true })
+  footprintKg: number | null;
+
+  /** Consumer profile key (commuter, foodie, homebody, shopper, globetrotter, balanced, guardian) */
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  profile: string | null;
+
   /** Cached AI analysis, per language: { en?: string, pt?: string } */
   @Column({ type: 'jsonb', name: 'ai_response', nullable: true })
   aiResponse: Record<string, string> | null;

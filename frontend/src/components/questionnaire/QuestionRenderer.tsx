@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useQuestionnaire } from './QuestionnaireManager';
 import { useLanguage } from '@/i18n/LanguageContext';
-import { QuestionnaireService } from '@/services/questionnaireService';
 
 export function QuestionRenderer() {
   const {
@@ -15,11 +12,9 @@ export function QuestionRenderer() {
     setAnswer,
     isFirstQuestion,
     isLastQuestion,
+    setPhase,
   } = useQuestionnaire();
   const { t, language } = useLanguage();
-  const navigate = useNavigate();
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const question = questions[currentQuestion];
   const selected = answers[question.id];
@@ -30,19 +25,14 @@ export function QuestionRenderer() {
     if (!isLastQuestion) setTimeout(goToNextQuestion, 250);
   };
 
-  const finish = async () => {
-    setSaving(true);
-    setError(null);
-    try {
-      const result = await QuestionnaireService.submit(answers, language);
-      navigate(`/questionnaire-answer/${result.id}`);
-    } catch (e) {
-      setError((e as Error).message || t.errors.generic);
-      setSaving(false);
-    }
+  const finish = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setPhase('carbon');
   };
 
   return (
+    <>
+    <div className="part-label"><span>{t.calc.part1}</span><span>1 / 2</span></div>
     <div className="card question-card">
       <span className="badge">{question.category[language]}</span>
       <h2 className="question-title">{question.question[language]}</h2>
@@ -76,8 +66,6 @@ export function QuestionRenderer() {
         <div className="progress-bar" style={{ width: `${progress}%` }} />
       </div>
 
-      {error && <p className="form-error">{error}</p>}
-
       <div className="question-nav">
         <button className="btn btn-ghost" onClick={goToPreviousQuestion} disabled={isFirstQuestion}>
           ‹ {t.q.previous}
@@ -86,9 +74,9 @@ export function QuestionRenderer() {
           <button
             className="btn btn-primary"
             onClick={finish}
-            disabled={saving || Object.keys(answers).length < totalQuestions}
+            disabled={Object.keys(answers).length < totalQuestions}
           >
-            {saving ? t.q.saving : t.q.finish}
+            {t.q.next} ›
           </button>
         ) : (
           <button className="btn btn-primary" onClick={goToNextQuestion} disabled={!selected}>
@@ -97,5 +85,6 @@ export function QuestionRenderer() {
         )}
       </div>
     </div>
+    </>
   );
 }

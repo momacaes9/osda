@@ -40,6 +40,10 @@ User (browser) ⇄ Front-End (Vite + React + TypeScript) ⇄ Backend API (NestJS
 | Auth | bcrypt hashed passwords, JWT access + refresh tokens, Passport guards, session table | `backend/src/modules/authentication`, `backend/src/auth` |
 
 ### Features
+- **CO2 footprint calculator** — part 2 of the quiz: car km & fuel, public transport, flights, electricity (kWh), cooking gas, meat meals, clothes and electronics, with a live estimate in t CO2e/year, breakdown by category, comparison with Brazil / world / 2030 target and the money you could save. Emission factors: DEFRA/DESNZ 2024, Brazil grid (MCTI), Poore & Nemecek 2018 (`backend/src/data/carbon.ts`, mirrored in `frontend/src/data/carbon.ts` — check with `npm run check:carbon`).
+- **Consumer profile** — The Commuter, Foodie, Homebody, Shopper, Globetrotter, Balanced or Guardian, based on where your footprint concentrates.
+- **Light & dark themes** — night forest (dark) and recycled paper + sage (light), saved per browser.
+- **Recognition, videos, research results, market comparison, UN SDGs (11–14), team, coming next and contact** on the home page.
 - **Questionnaire** — 10 questions (transport, energy, e-waste, waste, food, reuse, consumption, local products, plastic, awareness), stored in PostgreSQL (`questionnaires.answers` as `jsonb`, plus score, level and language).
 - **Bilingual** — every question, option, tip and UI text exists in EN and PT. Switch any time with the EN/PT toggle; the AI answers in the selected language and each analysis is cached per language.
 - **AI chatbot** — floating chat on every page + `/chat` page.
@@ -89,6 +93,14 @@ The API keeps an ordered chain of models and **switches to the next one automati
 | Pollinations | — | `openai` (GPT-OSS 20B) | free, no key |
 
 See which model answered last: `GET /api/ai/status`.
+
+## Google Search & Google Business
+
+The site ships with SEO basics: descriptive title/description per page, canonical URL, Open Graph/Twitter cards, `robots.txt`, `sitemap.xml` and **schema.org Organization** structured data (founders, awards, email, social profiles).
+
+To appear on Google (needs the team's Google account):
+1. **Google Search Console** → add property `https://osda-ai.vercel.app` → verify with the *HTML tag* method (send us the `google-site-verification` code and we add it to `frontend/index.html`) → submit `sitemap.xml` → *Request indexing*.
+2. **Google Business Profile** → business.google.com → create "OSDA — One Step Drives All", category *Environmental organization*, as a *service-area business* (São Paulo), website `https://osda-ai.vercel.app`, email `osda.ambientalglobal@gmail.com`. Google verifies it by phone/video.
 
 ## Deploy on Vercel
 

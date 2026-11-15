@@ -2,10 +2,17 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { QuestionnaireManager } from '@/components/questionnaire/QuestionnaireManager';
 import { QuestionRenderer } from '@/components/questionnaire/QuestionRenderer';
+import { CarbonStep } from '@/components/questionnaire/CarbonStep';
+import { useQuestionnaire } from '@/components/questionnaire/QuestionnaireManager';
 import { QuestionnaireService } from '@/services/questionnaireService';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useAuth } from '@/context/AuthContext';
 import type { Forms } from '@/services/types';
+
+function Phase() {
+  const { phase } = useQuestionnaire();
+  return phase === 'carbon' ? <CarbonStep /> : <QuestionRenderer />;
+}
 
 export function QuestionnairePage() {
   const { t } = useLanguage();
@@ -30,7 +37,7 @@ export function QuestionnairePage() {
         {!forms && !error && <div className="spinner" aria-label="Loading" />}
         {forms && (
           <QuestionnaireManager questions={forms.questions}>
-            <QuestionRenderer />
+            <Phase />
           </QuestionnaireManager>
         )}
       </div>

@@ -151,12 +151,17 @@ export class AiService {
       `and provide personalized, practical and encouraging recommendations. ` +
       `The user's sustainability score is ${questionnaire.score}/100 (level: ${level?.name[language]}). ` +
       `Structure: one short opening sentence about their profile, then 3 to 5 numbered recommendations ` +
-      `focused on the weakest habits, each with an estimated environmental impact, then one motivating closing line. ` +
+      `focused on the weakest habits and the biggest carbon categories (if a carbon footprint is given, mention it in tonnes), each with an estimated environmental impact, then one motivating closing line. ` +
       `Use a few emojis. Keep it under 250 words. Write in plain text without markdown formatting. Answer ONLY in ${languageName}.`;
 
     const response = await this.run({
       instructions: systemPrompt,
-      prompt: JSON.stringify(formattedAnswers),
+      prompt: JSON.stringify({
+        answers: formattedAnswers,
+        carbonFootprint: questionnaire.carbonResult
+          ? { kgCO2ePerYear: questionnaire.footprintKg, byCategoryKg: (questionnaire.carbonResult as { byCategory?: unknown }).byCategory, consumerProfile: questionnaire.profile }
+          : undefined,
+      }),
       timeoutMs: ANALYSIS_TIMEOUT_MS,
     });
 

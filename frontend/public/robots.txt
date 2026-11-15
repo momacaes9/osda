@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /questionnaire-answer/
+
+Sitemap: https://osda-ai.vercel.app/sitemap.xml

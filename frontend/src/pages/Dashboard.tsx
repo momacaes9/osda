@@ -41,7 +41,7 @@ export function Dashboard() {
               <div>
                 <strong>{levelName(q.level)}</strong>
                 <span className="muted small">
-                  {new Date(q.createdAt).toLocaleString(language === 'pt' ? 'pt-BR' : 'en-US')} · {q.language.toUpperCase()}
+                  {q.footprintKg ? `${(q.footprintKg / 1000).toLocaleString(language === 'pt' ? 'pt-BR' : 'en-US', { maximumFractionDigits: 1, minimumFractionDigits: 1 })} t CO2e · ` : ''}{new Date(q.createdAt).toLocaleDateString(language === 'pt' ? 'pt-BR' : 'en-US')} · {q.language.toUpperCase()}
                 </span>
               </div>
               <span className="accent">{t.dashboard.view} ›</span>

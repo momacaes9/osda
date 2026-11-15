@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Questionnaire } from './questionnaire.entity.js';
 import { forms, scoreAnswers } from '../../data/forms.js';
+import { calculateCarbon, sanitizeCarbonInputs } from '../../data/carbon.js';
 
 @Injectable()
 export class QuestionnaireService {
@@ -15,6 +16,7 @@ export class QuestionnaireService {
     answers: Record<string, string>,
     language: string,
     userId: number | null,
+    carbon?: Record<string, unknown> | null,
   ): Promise<Questionnaire> {
     const clean: Record<string, string> = {};
     for (const q of forms) {
@@ -25,6 +27,8 @@ export class QuestionnaireService {
       clean[String(q.id)] = value;
     }
     const { score, level } = scoreAnswers(clean);
+    const carbonInputs = carbon ? sanitizeCarbonInputs(carbon) : null;
+    const carbonResult = carbonInputs ? calculateCarbon(carbonInputs, clean['4']) : null;
     const entity = this.repository.create({
       answers: clean,
       language: language === 'pt' ? 'pt' : 'en',
@@ -32,6 +36,10 @@ export class QuestionnaireService {
       level,
       userId,
       aiResponse: null,
+      carbonInputs: carbonInputs as Record<string, unknown> | null,
+      carbonResult: carbonResult as unknown as Record<string, unknown> | null,
+      footprintKg: carbonResult?.totalKg ?? null,
+      profile: carbonResult?.profile ?? null,
     });
     return this.repository.save(entity);
   }

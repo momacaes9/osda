@@ -1,23 +1,91 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OSDA — One Step Drives All · Sustainability with AI</title>
+    <meta name="description" content="OSDA (Operação Sem Danos Ambientais) personalizes sustainability tips with AI. Take a free 3-minute quiz, calculate your CO2 footprint and chat with a sustainability assistant — in English and Portuguese." />
+    <meta name="keywords" content="OSDA, One Step Drives All, Operação Sem Danos Ambientais, sustainability, sustentabilidade, carbon footprint calculator, calculadora de pegada de carbono, CO2, AI, Technovation Girls, climate action, SDG 13" />
+    <meta name="author" content="OSDA team" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://osda-ai.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://osda-ai.vercel.app/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://osda-ai.vercel.app/" />
+
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#6f8a3a" />
-    <meta property="og:title" content="OSDA — One Step Drives All" />
-    <meta property="og:description" content="Make your lifestyle sustainable with AI. Questionnaire + AI chatbot in English and Portuguese." />
-    <meta property="og:image" content="/logo.jpg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="OSDA — One Step Drives All. Personalized sustainability tips with AI." />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b100a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#e9efdb" media="(prefers-color-scheme: light)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OSDA — One Step Drives All" />
+    <meta property="og:title" content="OSDA — Make your lifestyle sustainable with AI" />
+    <meta property="og:description" content="Free sustainability quiz, CO2 footprint calculator and AI chatbot. EN / PT." />
+    <meta property="og:url" content="https://osda-ai.vercel.app/" />
+    <meta property="og:image" content="https://osda-ai.vercel.app/logo.jpg" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="pt_BR" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="OSDA — One Step Drives All" />
+    <meta name="twitter:description" content="Free sustainability quiz, CO2 calculator and AI chatbot." />
+    <meta name="twitter:image" content="https://osda-ai.vercel.app/logo.jpg" />
+
+    <!-- Apply the saved theme before first paint (no flash) -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('osda.theme');
+          if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <title>OSDA — One Step Drives All</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "OSDA — One Step Drives All",
+        "alternateName": ["OSDA", "Operação Sem Danos Ambientais", "OSDA IA"],
+        "url": "https://osda-ai.vercel.app/",
+        "logo": "https://osda-ai.vercel.app/logo.jpg",
+        "email": "osda.ambientalglobal@gmail.com",
+        "slogan": "One Step Drives All",
+        "description": "Social enterprise from São Paulo, Brazil, that uses AI to recommend small daily habit changes that reduce each person's carbon footprint.",
+        "foundingLocation": { "@type": "Place", "name": "São Paulo, Brazil" },
+        "founder": [
+          { "@type": "Person", "name": "Monica Macaes", "jobTitle": "Development and Marketing Director", "sameAs": "https://www.linkedin.com/in/monicamacaes/" },
+          { "@type": "Person", "name": "Júlia Genzini", "jobTitle": "Systems and Ideation Manager", "sameAs": "https://www.linkedin.com/in/juliagenzini/" },
+          { "@type": "Person", "name": "Laura Placido", "jobTitle": "Finances and Business Manager", "sameAs": "https://www.linkedin.com/in/laura-franchini-/" },
+          { "@type": "Person", "name": "Priscila Gerhardt", "jobTitle": "Processes and Computer Manager", "sameAs": "https://www.linkedin.com/in/priscilagerhardt/" }
+        ],
+        "award": [
+          "GYC 2026 — Bronze Award (The Global Youth Challenge, judged with University of Toronto OISE)",
+          "Pitch for the Future 2025 — LATAM finalist",
+          "Global Innovation Challenge — Top 10 world, 2nd in Latin America",
+          "ESPM — Outstanding award, high school research showcase (2024)"
+        ],
+        "sameAs": [
+          "https://www.instagram.com/one_step_drives_all/",
+          "https://www.linkedin.com/company/osdaai/",
+          "https://www.youtube.com/@OSDA_IA",
+          "https://github.com/momacaes9/osda"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>OSDA — One Step Drives All</h1>
+      <p>OSDA personalizes sustainability tips with AI: a free questionnaire, a CO2 footprint calculator and an AI chatbot, in English and Portuguese. Contact: osda.ambientalglobal@gmail.com</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

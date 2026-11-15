@@ -11,10 +11,10 @@ export const QuestionnaireService = {
     });
     return formsCache;
   },
-  submit(answers: Record<number, string>, language: string) {
+  submit(answers: Record<number, string>, language: string, carbon?: object) {
     return api<QuestionnaireResult>('/questionnaire', {
       method: 'POST',
-      body: JSON.stringify({ answers, language }),
+      body: JSON.stringify({ answers, language, carbon }),
     });
   },
   get(id: number) {

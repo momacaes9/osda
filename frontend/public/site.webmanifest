@@ -1,0 +1,10 @@
+{
+  "name": "OSDA — One Step Drives All",
+  "short_name": "OSDA",
+  "description": "Sustainability quiz, CO2 calculator and AI chatbot.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b100a",
+  "theme_color": "#6f8a3a",
+  "icons": [{ "src": "/icon-192.jpg", "sizes": "192x192", "type": "image/jpeg" }]
+}

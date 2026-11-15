@@ -12,6 +12,7 @@ interface Sparkle {
   spin: number;
   angle: number;
   star: boolean;
+  light: number;
 }
 
 const MAX_SPARKLES = 120;
@@ -58,6 +59,7 @@ export function GlitterCursor() {
           spin: (Math.random() - 0.5) * 0.3,
           angle: Math.random() * Math.PI,
           star: Math.random() < 0.2,
+          light: document.documentElement.dataset.theme === 'light' ? 26 + Math.random() * 10 : 40 + Math.random() * 12,
         });
       }
     };
@@ -67,7 +69,7 @@ export function GlitterCursor() {
       ctx.save();
       ctx.translate(s.x, s.y);
       ctx.rotate(s.angle);
-      ctx.fillStyle = `hsla(${s.hue}, 70%, 45%, ${alpha})`;
+      ctx.fillStyle = `hsla(${s.hue}, 70%, ${s.light}%, ${alpha})`;
       ctx.beginPath();
       for (let i = 0; i < 4; i++) {
         ctx.rotate(Math.PI / 2);
@@ -100,8 +102,8 @@ export function GlitterCursor() {
           drawStar(s, alpha);
         } else {
           const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 2);
-          g.addColorStop(0, `hsla(${s.hue}, 75%, 50%, ${alpha})`);
-          g.addColorStop(0.45, `hsla(${s.hue}, 80%, 32%, ${alpha * 0.5})`);
+          g.addColorStop(0, `hsla(${s.hue}, 75%, ${s.light + 6}%, ${alpha})`);
+          g.addColorStop(0.45, `hsla(${s.hue}, 80%, ${s.light - 10}%, ${alpha * 0.5})`);
           g.addColorStop(1, `hsla(${s.hue}, 80%, 20%, 0)`);
           ctx.fillStyle = g;
           ctx.beginPath();

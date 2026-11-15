@@ -4,6 +4,8 @@ import { QuestionnaireService } from '@/services/questionnaireService';
 import { aiService } from '@/services/aiService';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { askChat } from '@/components/ChatBot';
+import { CarbonResultView } from '@/components/CarbonResultView';
+import { IconSpark } from '@/components/Icons';
 import type { Forms, QuestionnaireResult } from '@/services/types';
 
 function ScoreRing({ score }: { score: number }) {
@@ -101,8 +103,10 @@ export function QuestionnaireAnswerPage() {
           <p className="level-desc">{level?.description[language]}</p>
         </div>
 
+        {result.carbonResult && <CarbonResultView result={result.carbonResult} />}
+
         <div className="card ai-card">
-          <h2>✨ {t.result.aiTitle}</h2>
+          <h2><IconSpark size={22} /> {t.result.aiTitle}</h2>
           {aiText ? (
             <p className="ai-text">{aiText}</p>
           ) : aiError ? (
@@ -115,12 +119,12 @@ export function QuestionnaireAnswerPage() {
             onClick={() =>
               askChat(
                 language === 'pt'
-                  ? `Minha pontuação de sustentabilidade foi ${result.score}/100 (${level?.name.pt}). Qual a primeira mudança que você recomenda?`
-                  : `My sustainability score was ${result.score}/100 (${level?.name.en}). What first change do you recommend?`,
+                  ? `Minha pontuação de sustentabilidade foi ${result.score}/100 (${level?.name.pt})${result.footprintKg ? ` e minha pegada é ${(result.footprintKg / 1000).toFixed(1)} t CO2e/ano` : ''}. Qual a primeira mudança que você recomenda?`
+                  : `My sustainability score was ${result.score}/100 (${level?.name.en})${result.footprintKg ? ` and my footprint is ${(result.footprintKg / 1000).toFixed(1)} t CO2e/year` : ''}. What first change do you recommend?`,
               )
             }
           >
-            💬 {t.result.askAi}
+            {t.result.askAi}
           </button>
         </div>
 
@@ -134,7 +138,7 @@ export function QuestionnaireAnswerPage() {
               <div>
                 <h3>{q.category[language]}</h3>
                 <p>{q.tip[language]}</p>
-                <p className="impact">🌍 {q.impact[language]}</p>
+                <p className="impact">{q.impact[language]}</p>
               </div>
             </div>
           ))}
