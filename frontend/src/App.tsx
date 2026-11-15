@@ -4,6 +4,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ChatBot } from '@/components/ChatBot';
+import { GlitterCursor } from '@/components/GlitterCursor';
 import { Home } from '@/pages/Home';
 import { AuthPage } from '@/pages/AuthPage';
 import { QuestionnairePage } from '@/pages/QuestionnairePage';
@@ -29,6 +30,7 @@ function Layout() {
         </Routes>
       </main>
       <Footer />
+      <GlitterCursor />
       {pathname !== '/chat' && <ChatBot />}
     </div>
   );
