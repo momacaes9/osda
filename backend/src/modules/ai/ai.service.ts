@@ -19,13 +19,15 @@ export type ChatMessage = { role: 'user' | 'assistant'; content: string };
 
 interface RunInput {
   instructions: string;
+  timeoutMs?: number;
   prompt?: string;
   messages?: ChatMessage[];
 }
 
 const COOLDOWN_QUOTA_MS = 15 * 60 * 1000; // out of credits / rate limited
-const COOLDOWN_ERROR_MS = 60 * 1000; // other failures
-const TIMEOUT_MS = Number(process.env.AI_TIMEOUT_MS) || 25_000;
+const COOLDOWN_ERROR_MS = 30 * 1000; // other failures (slow answers / timeouts are NOT cooled down)
+const CHAT_TIMEOUT_MS = Number(process.env.AI_TIMEOUT_MS) || 35_000;
+const ANALYSIS_TIMEOUT_MS = Number(process.env.AI_ANALYSIS_TIMEOUT_MS) || 60_000;
 
 @Injectable()
 export class AiService {
@@ -76,7 +78,7 @@ export class AiService {
             ? { messages: input.messages as ModelMessage[] }
             : { prompt: input.prompt ?? '' }),
           maxRetries: 0,
-          abortSignal: AbortSignal.timeout(TIMEOUT_MS),
+          abortSignal: AbortSignal.timeout(input.timeoutMs ?? CHAT_TIMEOUT_MS),
         });
         const text = toPlainText(result.text ?? '');
         if (!text) throw new Error('Empty response');
@@ -85,9 +87,12 @@ export class AiService {
         return text;
       } catch (error) {
         const quota = isQuotaError(error);
-        this.cooldown.set(key, Date.now() + (quota ? COOLDOWN_QUOTA_MS : COOLDOWN_ERROR_MS));
+        const timedOut = /abort|timeout/i.test(String((error as Error)?.name) + (error as Error)?.message);
+        if (!timedOut) {
+          this.cooldown.set(key, Date.now() + (quota ? COOLDOWN_QUOTA_MS : COOLDOWN_ERROR_MS));
+        }
         this.logger.warn(
-          `AI ${key} failed (${quota ? 'quota/limit' : 'error'}): ${(error as Error).message?.slice(0, 160)} — trying next model`,
+          `AI ${key} failed (${quota ? 'quota/limit' : timedOut ? 'timeout' : 'error'}): ${(error as Error).message?.slice(0, 160)} — trying next model`,
         );
       }
     }
@@ -152,6 +157,7 @@ export class AiService {
     const response = await this.run({
       instructions: systemPrompt,
       prompt: JSON.stringify(formattedAnswers),
+      timeoutMs: ANALYSIS_TIMEOUT_MS,
     });
 
     if (!response) {
