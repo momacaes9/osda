@@ -116,7 +116,7 @@ Production runs on two Vercel projects connected to this GitHub repo — **every
 - **frontend** env: `VITE_API_URL=https://backend-zeta-lac-99.vercel.app/api`. `frontend/vercel.json` rewrites deep links to `index.html`.
 - **backend** env: `DATABASE_URL` (Supabase transaction pooler, port 6543), `DATABASE_SCHEMA=osda`, `DATABASE_SSL=true`, `JWT_SECRET`, `CORS_ORIGIN` (frontend URLs), `VERCEL_FORCE_NO_BUILD_CACHE=1`, plus optional AI keys.
 - Database: free **Supabase** project with a private `osda` schema (not exposed by the Supabase public REST API). Tables are created automatically on first start.
-- Alternative single-project setup: the root `vercel.json` uses **Vercel Services** (Vite at `/`, API at `/api`) — mirror at https://osda-tau.vercel.app.
+- Alternative single-project setup: the root `vercel.json` uses **Vercel Services** (Vite at `/`, API at `/api`) — https://osda-tau.vercel.app now redirects to https://osda-ai.vercel.app (one canonical address for search engines).
 
 ---
 

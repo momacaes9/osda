@@ -1,4 +1,22 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "frontend-phi-five-jmn7bl1xem.vercel.app"
+        }
+      ],
+      "destination": "https://osda-ai.vercel.app/:path*",
+      "permanent": true
+    }
+  ]
 }

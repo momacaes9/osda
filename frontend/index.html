@@ -85,9 +85,42 @@
         ]
       }
     </script>
+      <style>
+      .seo-fallback { max-width: 760px; margin: 0 auto; padding: 48px 20px; font-family: Inter, system-ui, sans-serif; line-height: 1.6; color: #c9d3bf; }
+      :root[data-theme='light'] .seo-fallback { color: #34472a; }
+      .seo-fallback img { border-radius: 50%; }
+      .seo-fallback h1, .seo-fallback h2 { font-family: Fraunces, Georgia, serif; color: inherit; }
+      .seo-fallback a { color: #9cc65a; }
+      html { background: #0b100a; } :root[data-theme='light'] { background: #e9efdb; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Crawlable summary (replaced by the React app as soon as JavaScript runs) -->
+      <main class="seo-fallback">
+        <img src="/logo.jpg" alt="OSDA AI logo" width="96" height="96" />
+        <h1>OSDA AI — One Step Drives All</h1>
+        <p><strong>OSDA</strong> (OSDA AI · OSDA Global · Operação Sem Danos Ambientais) is an international environmental engineering project led by young Brazilian women 🇧🇷. Make your lifestyle sustainable with AI: a free sustainability questionnaire, a CO2 footprint calculator and an AI chatbot, in English and Portuguese.</p>
+        <p><a href="/questionnaire">Take the free quiz and calculate your carbon footprint</a> · <a href="/chat">Talk to the OSDA AI assistant</a></p>
+        <h2>Recognition</h2>
+        <ul>
+          <li>GYC 2026 — The Global Youth Challenge: Top 16 · Bronze Award (judged by University of Toronto OISE, Brock University, University of Waterloo, Erindale Academy)</li>
+          <li>Global Innovation Challenge 2025 — Top 10 in the world, #2 in Latin America</li>
+          <li>PFF25 — Pitch for the Future 2025: LATAM finalist</li>
+          <li>ESPM × Mizzou Academy (University of Missouri) — Outstanding award, research poster showcase</li>
+        </ul>
+        <h2>Team — Class of 2030</h2>
+        <ul>
+          <li>Monica Macaes — Development and Marketing Director · UNC Chapel Hill, Data Science &amp; Economics</li>
+          <li>Júlia Genzini — Systems and Ideation Manager · Purdue University, Industrial Engineering</li>
+          <li>Laura Placido — Finances and Business Manager · USC, Systems Engineering</li>
+          <li>Priscila Gerhardt — Processes and Computer Manager · Georgia Tech, Computer Science</li>
+        </ul>
+        <h2>Get involved</h2>
+        <p>High school students worldwide can volunteer (free, until February 2027) to post for OSDA on social media. 100+ Instagram posts and 7,000+ people reached.</p>
+        <p>Contact: osda.ambientalglobal@gmail.com · <a href="https://www.instagram.com/one_step_drives_all/">Instagram</a> · <a href="https://www.linkedin.com/company/osdaai/">LinkedIn</a> · <a href="https://www.youtube.com/@OSDA_IA">YouTube</a> · <a href="https://github.com/momacaes9/osda">GitHub</a></p>
+      </main>
+    </div>
     <noscript>
       <h1>OSDA AI — One Step Drives All (OSDA Global)</h1>
       <p>An international environmental engineering project led by young Brazilian women. OSDA personalizes sustainability tips with AI: a free questionnaire, a CO2 footprint calculator and an AI chatbot, in English and Portuguese.</p>
