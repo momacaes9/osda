@@ -84,7 +84,7 @@ export function offlineQuestionnaireAnswer(
     .join('\n');
   const outro =
     language === 'pt'
-      ? '💚 Lembre-se: Um Passo Impulsiona Tudo. Escolha uma dica para começar esta semana!'
+      ? '💚 Lembre-se: One Step Drives All. Escolha uma dica para começar esta semana!'
       : '💚 Remember: One Step Drives All. Pick one tip to start this week!';
   return `${intro}\n\n${tips}\n\n${outro}`;
 }

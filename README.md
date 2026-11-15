@@ -1,12 +1,14 @@
 # 🌱 OSDA — One Step Drives All
 
-**Operação Sem Danos Ambientais** · *Um Passo Impulsiona Tudo*
+**Operação Sem Danos Ambientais** · *One Step Drives All*
 
 🌐 **Live:** https://osda-ai.vercel.app · API: https://backend-zeta-lac-99.vercel.app/api/health · 🔎 AI status: https://backend-zeta-lac-99.vercel.app/api/ai/status
 
 📸 [Instagram](https://www.instagram.com/one_step_drives_all/) · 💼 [LinkedIn](https://www.linkedin.com/company/osdaai/)
 
-🏆 **PFF25 — Pitch for the Future: Winners** · 🎓 **GYC Recognition — University of Toronto 2026**
+🏆 **GYC 2026 — Top 16 · Bronze** · 🌍 **Global Innovation Challenge — Top 10 world, #2 LATAM** · 🎤 **PFF25 — LATAM finalist** · 📚 **ESPM × Mizzou Academy — Outstanding award**
+
+🙋 **Volunteers wanted** (high schoolers worldwide, free, until Feb 2027): [apply here](https://docs.google.com/forms/d/e/1FAIpQLSc-qMv-SE1B3E_nBGBgKBMxmzSVJX7xLwxTFJZlWeV5WkBvPw/viewform) · ✍️ [Write a blog post](https://forms.gle/GTza8ibVgH9oCC9H9) · 📧 osda.ambientalglobal@gmail.com · monicagrenadier@gmail.com
 
 OSDA personalizes sustainability tips based on your lifestyle. Answer a 10-question assessment, get a score from 0 to 100, your level (Beginner → Expert), personalized tips, an AI analysis, and chat with a sustainability assistant — in **English and Portuguese**.
 
@@ -15,12 +17,12 @@ OSDA personalizes sustainability tips based on your lifestyle. Answer a 10-quest
 
 ## Team
 
-| | Name | Role |
-| --- | --- | --- |
-| <img src="frontend/public/team/julia.jpg" width="64"> | [Júlia Genzini](https://www.linkedin.com/in/juliagenzini/) | Systems and Ideation Manager |
-| <img src="frontend/public/team/laura.jpg" width="64"> | [Laura Placido](https://www.linkedin.com/in/laura-franchini-/) | Finances and Business Manager |
-| <img src="frontend/public/team/monica.jpg" width="64"> | [Monica Macaes](https://www.linkedin.com/in/monicamacaes/) | Development and Marketing Director |
-| <img src="frontend/public/team/priscila.jpg" width="64"> | [Priscila Gerhardt](https://www.linkedin.com/in/priscilagerhardt/) | Processes and Computer Manager |
+| | Name | Role | University (Class of 2030) |
+| --- | --- | --- | --- |
+| <img src="frontend/public/team/julia.jpg" width="64"> | [Júlia Genzini](https://www.linkedin.com/in/juliagenzini/) | Systems and Ideation Manager | Purdue — Industrial Engineering |
+| <img src="frontend/public/team/laura.jpg" width="64"> | [Laura Placido](https://www.linkedin.com/in/laura-franchini-/) | Finances and Business Manager | USC — Systems Engineering |
+| <img src="frontend/public/team/monica.jpg" width="64"> | [Monica Macaes](https://www.linkedin.com/in/monicamacaes/) | Development and Marketing Director | UNC Chapel Hill — Data Science & Economics |
+| <img src="frontend/public/team/priscila.jpg" width="64"> | [Priscila Gerhardt](https://www.linkedin.com/in/priscilagerhardt/) | Processes and Computer Manager | Georgia Tech — Computer Science |
 
 ## Architecture
 

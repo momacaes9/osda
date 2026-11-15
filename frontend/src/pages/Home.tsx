@@ -6,7 +6,11 @@ import { team, socials } from '@/data/team';
 import {
   awards,
   competitors,
+  BLOG_FORM,
   CONTACT_EMAIL,
+  FOUNDER_EMAIL,
+  INSTAGRAM_POSTS,
+  VOLUNTEER_FORM,
   future,
   marketFeatures,
   research,
@@ -56,7 +60,7 @@ export function Home() {
     }
   };
 
-  const marqueeItems = awards.filter((a) => a.icon !== 'rocket').map((a) => `${a.org[language]} — ${a.title[language]}`);
+  const marqueeItems = awards.map((a) => `${a.org[language]} — ${a.title[language]}`);
 
   return (
     <>
@@ -81,10 +85,10 @@ export function Home() {
               </button>
             </div>
             <div className="hero-stats">
-              <div><strong>{research.respondents}</strong><span>{s.researchLead}</span></div>
+              <div><strong>{INSTAGRAM_POSTS}</strong><span>{t.instaPosts}</span></div>
               <div><strong>{research.reach}</strong><span>{s.reach}</span></div>
+              <div><strong>{research.respondents}</strong><span>{s.researchLead}</span></div>
               <div><strong>Top 10</strong><span>Global Innovation Challenge</span></div>
-              <div><strong>Top 16</strong><span>Global Youth Challenge</span></div>
             </div>
           </div>
           <div className="hero-medal">
@@ -284,7 +288,7 @@ export function Home() {
       {/* ---------------- Team ---------------- */}
       <section id="team" className="section">
         <div className="container">
-          <SectionHead kicker={s.team} title={t.team.title} lead={`${t.hero.tagline} 🇧🇷`} />
+          <SectionHead kicker={`${s.team} · ${t.classOf}`} title={t.team.title} lead={`${t.hero.tagline} 🇧🇷 ${t.classText}`} />
           <div className="team-grid">
             {team.map((m) => (
               <a
@@ -298,6 +302,10 @@ export function Home() {
                 <img src={m.photo} alt={m.name} width={132} height={132} loading="lazy" className="member-photo" />
                 <h3>{m.name}</h3>
                 <p className="muted">{m.role[language]}</p>
+                <p className="member-school">
+                  <strong>{m.school}</strong>
+                  <span>{m.major[language]} · {t.classOf}</span>
+                </p>
                 <span className="member-link"><LinkedInIcon size={16} /> LinkedIn</span>
               </a>
             ))}
@@ -327,6 +335,42 @@ export function Home() {
         </div>
       </section>
 
+      {/* ---------------- Get involved ---------------- */}
+      <section id="involved" className="section">
+        <div className="container">
+          <SectionHead kicker={t.involved.kicker} title={t.involved.title} />
+          <div className="involved-grid">
+            <div className="card involved-card highlight-card">
+              <div className="future-top">
+                <span className="feature-icon"><IconUsers size={22} /></span>
+                <span className="pill">{t.involved.volBadge}</span>
+              </div>
+              <h3>{t.involved.volTitle}</h3>
+              <p className="muted">{t.involved.volText}</p>
+              <ul className="ticks">
+                {t.involved.volPoints.map((p) => (
+                  <li key={p}><IconCheck size={16} /> {p}</li>
+                ))}
+              </ul>
+              <a className="btn btn-primary" href={VOLUNTEER_FORM} target="_blank" rel="noopener noreferrer">
+                {t.involved.volCta} <IconArrow size={16} />
+              </a>
+            </div>
+            <div className="card involved-card">
+              <div className="future-top">
+                <span className="feature-icon"><IconBook size={22} /></span>
+                <span className="pill muted-pill">{t.involved.blogBadge}</span>
+              </div>
+              <h3>{t.involved.blogTitle}</h3>
+              <p className="muted">{t.involved.blogText}</p>
+              <a className="btn btn-outline" href={BLOG_FORM} target="_blank" rel="noopener noreferrer">
+                {t.involved.blogCta} <IconArrow size={16} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ---------------- Contact ---------------- */}
       <section id="contact" className="section">
         <div className="container">
@@ -338,12 +382,18 @@ export function Home() {
               <p className="lead">{s.contactText}</p>
             </div>
             <div className="contact-actions">
+              <span className="email-label">{t.teamContact}</span>
               <div className="email-box">
                 <IconMail size={18} />
                 <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                 <button className="btn btn-outline" onClick={copyEmail} aria-live="polite">
                   {copied ? <IconCheck size={16} /> : <IconCopy size={16} />} {copied ? s.copied : s.copy}
                 </button>
+              </div>
+              <span className="email-label">{t.founderContact}</span>
+              <div className="email-box">
+                <IconMail size={18} />
+                <a href={`mailto:${FOUNDER_EMAIL}`}>{FOUNDER_EMAIL}</a>
               </div>
               <a className="btn btn-primary btn-lg" href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(language === 'pt' ? 'Parceria com a OSDA' : 'Partnership with OSDA')}`}>
                 <IconHandshake size={20} /> {s.partner}

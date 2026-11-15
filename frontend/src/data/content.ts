@@ -3,6 +3,10 @@ import type { Language } from '@/i18n/translations';
 type L = Record<Language, string>;
 
 export const CONTACT_EMAIL = 'osda.ambientalglobal@gmail.com';
+export const FOUNDER_EMAIL = 'monicagrenadier@gmail.com';
+export const VOLUNTEER_FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSc-qMv-SE1B3E_nBGBgKBMxmzSVJX7xLwxTFJZlWeV5WkBvPw/viewform';
+export const BLOG_FORM = 'https://forms.gle/GTza8ibVgH9oCC9H9';
+export const INSTAGRAM_POSTS = '100+';
 export const YOUTUBE_CHANNEL = 'https://www.youtube.com/@OSDA_IA';
 
 /* ---------------- Recognition ---------------- */
@@ -53,13 +57,6 @@ export const awards: Award[] = [
       en: 'Joint research poster showcase — where it all started, as the project "ONG". Action research with 152 respondents.',
       pt: 'Mostra conjunta de pôsteres científicos — onde tudo começou, ainda como o projeto "ONG". Pesquisa-ação com 152 respondentes.',
     },
-  },
-  {
-    icon: 'rocket',
-    year: '2025',
-    title: { en: 'Participants', pt: 'Participantes' },
-    org: { en: 'Technovation Girls', pt: 'Technovation Girls' },
-    detail: { en: 'Built and pitched the OSDA app — pitch and technical videos.', pt: 'Criamos e apresentamos o app OSDA — vídeos de pitch e técnico.' },
   },
 ];
 

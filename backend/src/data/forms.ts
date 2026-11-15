@@ -259,7 +259,7 @@ export const levels: { min: number; key: string; name: Localized; description: L
     name: { en: 'Beginner', pt: 'Iniciante' },
     description: {
       en: 'Every journey starts with one step — and One Step Drives All. Small changes make a big difference!',
-      pt: 'Toda jornada começa com um passo — e Um Passo Impulsiona Tudo. Pequenas mudanças fazem grande diferença!',
+      pt: 'Toda jornada começa com um passo — e One Step Drives All. Pequenas mudanças fazem grande diferença!',
     },
   },
 ];
