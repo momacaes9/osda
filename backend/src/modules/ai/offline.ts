@@ -51,7 +51,9 @@ const topics: { keywords: string[]; en: string; pt: string }[] = [
 export function offlineChatAnswer(messages: ChatMessage[], language: Language): string {
   const last = [...messages].reverse().find((m) => m.role === 'user')?.content.toLowerCase() ?? '';
   const isPt = language === 'pt';
-  const topic = topics.find((t) => t.keywords.some((k) => last.includes(k)));
+  // Match keywords at the start of words ("pilhas" -> "pilha", but "descartar" must not match "car")
+  const words = last.split(/[^\p{L}\p{N}-]+/u).filter(Boolean);
+  const topic = topics.find((t) => t.keywords.some((k) => words.some((w) => w.startsWith(k))));
   if (topic) return isPt ? topic.pt : topic.en;
   if (/^(hi|hello|hey|oi|olá|ola|bom dia|boa tarde|boa noite)\b/.test(last)) {
     return isPt
