@@ -25,3 +25,5 @@ build/
 .vscode/*
 !.vscode/extensions.json
 .idea/
+.vercel
+.env*
