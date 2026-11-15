@@ -33,6 +33,17 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "osda-tau.vercel.app"
+        }
+      ],
+      "destination": "https://osda-ai.vercel.app/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {

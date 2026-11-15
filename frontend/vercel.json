@@ -8,6 +8,17 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "frontend-phi-five-jmn7bl1xem.vercel.app"
+        }
+      ],
+      "destination": "https://osda-ai.vercel.app/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
