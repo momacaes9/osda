@@ -2,6 +2,8 @@
 
 **Operação Sem Danos Ambientais** · *Um Passo Impulsiona Tudo*
 
+🌐 **Live:** https://osda-tau.vercel.app · 🔎 AI status: https://osda-tau.vercel.app/api/ai/status
+
 OSDA personalizes sustainability tips based on your lifestyle. Answer a 10-question assessment, get a score from 0 to 100, your level (Beginner → Expert), personalized tips, an AI analysis, and chat with a sustainability assistant — in **English and Portuguese**.
 
 > 🇧🇷 [Versão em português abaixo](#-português)
@@ -76,12 +78,13 @@ See which model answered last: `GET /api/ai/status`.
 
 ## Deploy on Vercel
 
-`vercel.json` uses **Vercel Services**: one project, the Vite app at `/` and the NestJS API at `/api`.
+Live at **https://osda-tau.vercel.app** — one Vercel project using **Vercel Services** (`vercel.json`): the Vite app at `/` and the NestJS API at `/api`.
 
-1. Import this GitHub repo in Vercel (root directory = repo root).
-2. Add a Postgres database from the Vercel Marketplace (Neon or Supabase) — it sets `DATABASE_URL`. Also set `DATABASE_SSL=true`.
-3. Add `JWT_SECRET`. AI works with no keys (free Pollinations); optionally add `GROQ_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY` or `AI_API_KEY` for more models.
-4. Deploy. Tables are created automatically on first start (`DATABASE_SYNCHRONIZE=true`).
+1. Import this GitHub repo in Vercel (root directory = repo root). Connect it under Project → Settings → Git to deploy on every push to `main` (until then, deploy with `vercel deploy --prod`).
+2. Database: any Postgres. Production uses a free **Supabase** project with a private `osda` schema (not exposed by the Supabase public REST API). Set `DATABASE_URL` (Supabase transaction pooler, port 6543), `DATABASE_SCHEMA=osda` and `DATABASE_SSL=true`.
+3. Set `JWT_SECRET` (`openssl rand -hex 32`) and `VERCEL_FORCE_NO_BUILD_CACHE=1`.
+4. AI works with no keys (free Pollinations). Optionally add `GROQ_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY` or `AI_API_KEY` for more models in the fallback chain.
+5. Tables are created automatically on first start (`DATABASE_SYNCHRONIZE=true`).
 
 ---
 
@@ -106,7 +109,7 @@ npm run dev:web                         # abra http://localhost:5173
 Sem nenhuma chave, a IA usa a Pollinations (grátis, sem cadastro). Adicione chaves grátis do Groq/Gemini/OpenRouter: quando um modelo fica sem créditos ou cai, o próximo assume automaticamente.
 
 ### Deploy na Vercel
-Importe o repositório na Vercel, adicione um Postgres pelo Marketplace (Neon/Supabase), defina `JWT_SECRET`, `DATABASE_SSL=true` e a chave de IA, e faça o deploy.
+No ar em **https://osda-tau.vercel.app**. Banco: Supabase grátis (schema privado `osda`). Para publicar a cada push na `main`, conecte o GitHub em Project → Settings → Git (até lá: `vercel deploy --prod`). Defina `DATABASE_URL`, `DATABASE_SCHEMA=osda`, `DATABASE_SSL=true` e `JWT_SECRET`; a IA funciona sem chave e usa Groq/Gemini/OpenRouter se você adicionar as chaves grátis.
 
 ---
 
