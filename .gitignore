@@ -4,6 +4,7 @@
 *.parquet
 data/
 !backend/src/data/
+!frontend/src/data/
 
 # Secrets — never commit
 .env
