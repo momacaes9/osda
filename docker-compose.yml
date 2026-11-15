@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: osda
+      POSTGRES_PASSWORD: osda
+      POSTGRES_DB: osda
+    ports:
+      - "5432:5432"
+    volumes:
+      - osda-pg:/var/lib/postgresql/data
+volumes:
+  osda-pg:

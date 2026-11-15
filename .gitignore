@@ -1,0 +1,27 @@
+# Data files
+*.csv
+*.csv.gz
+*.parquet
+data/
+!backend/src/data/
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+access_token
+kaggle.json
+
+# Dependencies & builds
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.vercel/
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/*
+!.vscode/extensions.json
+.idea/
