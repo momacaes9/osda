@@ -30,6 +30,7 @@ export function Header() {
         <nav className={`nav ${open ? 'open' : ''}`}>
           <a href="/#how" onClick={close}>{t.nav.how}</a>
           <a href="/#benefits" onClick={close}>{t.nav.benefits}</a>
+          <a href="/#team" onClick={close}>{t.nav.team}</a>
           <NavLink to="/chat" onClick={close}>{t.nav.chat}</NavLink>
           {user ? (
             <>

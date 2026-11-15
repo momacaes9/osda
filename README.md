@@ -2,11 +2,25 @@
 
 **Operação Sem Danos Ambientais** · *Um Passo Impulsiona Tudo*
 
-🌐 **Live:** https://osda-tau.vercel.app · 🔎 AI status: https://osda-tau.vercel.app/api/ai/status
+🌐 **Live:** https://osda-ai.vercel.app · API: https://backend-zeta-lac-99.vercel.app/api/health · 🔎 AI status: https://backend-zeta-lac-99.vercel.app/api/ai/status
+
+📸 [Instagram](https://www.instagram.com/one_step_drives_all/) · 💼 [LinkedIn](https://www.linkedin.com/company/osdaai/)
+
+🏆 **PFF25 — Pitch for the Future: Winners** · 🎓 **GYC Recognition — University of Toronto 2026**
 
 OSDA personalizes sustainability tips based on your lifestyle. Answer a 10-question assessment, get a score from 0 to 100, your level (Beginner → Expert), personalized tips, an AI analysis, and chat with a sustainability assistant — in **English and Portuguese**.
 
 > 🇧🇷 [Versão em português abaixo](#-português)
+
+
+## Team
+
+| | Name | Role |
+| --- | --- | --- |
+| <img src="frontend/public/team/julia.jpg" width="64"> | [Júlia Genzini](https://www.linkedin.com/in/juliagenzini/) | Systems and Ideation Manager |
+| <img src="frontend/public/team/laura.jpg" width="64"> | [Laura Placido](https://www.linkedin.com/in/laura-franchini-/) | Finances and Business Manager |
+| <img src="frontend/public/team/monica.jpg" width="64"> | [Monica Macaes](https://www.linkedin.com/in/monicamacaes/) | Development and Marketing Director |
+| <img src="frontend/public/team/priscila.jpg" width="64"> | [Priscila Gerhardt](https://www.linkedin.com/in/priscilagerhardt/) | Processes and Computer Manager |
 
 ## Architecture
 
@@ -78,13 +92,17 @@ See which model answered last: `GET /api/ai/status`.
 
 ## Deploy on Vercel
 
-Live at **https://osda-tau.vercel.app** — one Vercel project using **Vercel Services** (`vercel.json`): the Vite app at `/` and the NestJS API at `/api`.
+Production runs on two Vercel projects connected to this GitHub repo — **every push to `main` deploys automatically**:
 
-1. Import this GitHub repo in Vercel (root directory = repo root). Auto-deploy: the GitHub Action `.github/workflows/deploy.yml` publishes on every push to `main` once the `VERCEL_TOKEN` repo secret is set (repo variables `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` are already configured).
-2. Database: any Postgres. Production uses a free **Supabase** project with a private `osda` schema (not exposed by the Supabase public REST API). Set `DATABASE_URL` (Supabase transaction pooler, port 6543), `DATABASE_SCHEMA=osda` and `DATABASE_SSL=true`.
-3. Set `JWT_SECRET` (`openssl rand -hex 32`) and `VERCEL_FORCE_NO_BUILD_CACHE=1`.
-4. AI works with no keys (free Pollinations). Optionally add `GROQ_API_KEY`, `GEMINI_API_KEY`, `OPENROUTER_API_KEY` or `AI_API_KEY` for more models in the fallback chain.
-5. Tables are created automatically on first start (`DATABASE_SYNCHRONIZE=true`).
+| Project | Root directory | URL |
+| --- | --- | --- |
+| `frontend` (Vite) | `frontend` | https://osda-ai.vercel.app |
+| `backend` (NestJS) | `backend` | https://backend-zeta-lac-99.vercel.app/api |
+
+- **frontend** env: `VITE_API_URL=https://backend-zeta-lac-99.vercel.app/api`. `frontend/vercel.json` rewrites deep links to `index.html`.
+- **backend** env: `DATABASE_URL` (Supabase transaction pooler, port 6543), `DATABASE_SCHEMA=osda`, `DATABASE_SSL=true`, `JWT_SECRET`, `CORS_ORIGIN` (frontend URLs), `VERCEL_FORCE_NO_BUILD_CACHE=1`, plus optional AI keys.
+- Database: free **Supabase** project with a private `osda` schema (not exposed by the Supabase public REST API). Tables are created automatically on first start.
+- Alternative single-project setup: the root `vercel.json` uses **Vercel Services** (Vite at `/`, API at `/api`) — mirror at https://osda-tau.vercel.app.
 
 ---
 
@@ -109,7 +127,7 @@ npm run dev:web                         # abra http://localhost:5173
 Sem nenhuma chave, a IA usa a Pollinations (grátis, sem cadastro). Adicione chaves grátis do Groq/Gemini/OpenRouter: quando um modelo fica sem créditos ou cai, o próximo assume automaticamente.
 
 ### Deploy na Vercel
-No ar em **https://osda-tau.vercel.app**. Banco: Supabase grátis (schema privado `osda`). Cada push na `main` publica via GitHub Action, depois que o secret `VERCEL_TOKEN` for adicionado no repositório. Defina `DATABASE_URL`, `DATABASE_SCHEMA=osda`, `DATABASE_SSL=true` e `JWT_SECRET`; a IA funciona sem chave e usa Groq/Gemini/OpenRouter se você adicionar as chaves grátis.
+No ar em **https://osda-ai.vercel.app** (frontend) e **https://backend-zeta-lac-99.vercel.app/api** (API), dois projetos da Vercel ligados ao GitHub: cada push na `main` publica sozinho. Banco: Supabase grátis (schema privado `osda`).
 
 ---
 

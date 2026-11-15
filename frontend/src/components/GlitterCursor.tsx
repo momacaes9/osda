@@ -14,10 +14,10 @@ interface Sparkle {
   star: boolean;
 }
 
-const MAX_SPARKLES = 220;
+const MAX_SPARKLES = 120;
 
 /**
- * Green glitter that follows the mouse (and finger on touch screens).
+ * Subtle dark-green glitter that follows the mouse (and finger on touch screens).
  * Canvas overlay with pointer-events: none, so it never blocks clicks.
  * Turns itself off for users who prefer reduced motion.
  */
@@ -45,7 +45,7 @@ export function GlitterCursor() {
 
     const spawn = (x: number, y: number, count: number) => {
       for (let i = 0; i < count && sparkles.length < MAX_SPARKLES; i++) {
-        const maxLife = 35 + Math.random() * 35;
+        const maxLife = 28 + Math.random() * 28;
         sparkles.push({
           x: x + (Math.random() - 0.5) * 10,
           y: y + (Math.random() - 0.5) * 10,
@@ -53,11 +53,11 @@ export function GlitterCursor() {
           vy: Math.random() * 1.2 - 0.3,
           life: maxLife,
           maxLife,
-          size: 1.5 + Math.random() * 3.5,
-          hue: 80 + Math.random() * 60, // lime → emerald
+          size: 1 + Math.random() * 2.2,
+          hue: 110 + Math.random() * 40, // deep green → emerald
           spin: (Math.random() - 0.5) * 0.3,
           angle: Math.random() * Math.PI,
-          star: Math.random() < 0.35,
+          star: Math.random() < 0.2,
         });
       }
     };
@@ -67,7 +67,7 @@ export function GlitterCursor() {
       ctx.save();
       ctx.translate(s.x, s.y);
       ctx.rotate(s.angle);
-      ctx.fillStyle = `hsla(${s.hue}, 100%, 75%, ${alpha})`;
+      ctx.fillStyle = `hsla(${s.hue}, 70%, 45%, ${alpha})`;
       ctx.beginPath();
       for (let i = 0; i < 4; i++) {
         ctx.rotate(Math.PI / 2);
@@ -81,8 +81,7 @@ export function GlitterCursor() {
 
     const tick = () => {
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      ctx.globalCompositeOperation = 'lighter';
-      for (let i = sparkles.length - 1; i >= 0; i--) {
+            for (let i = sparkles.length - 1; i >= 0; i--) {
         const s = sparkles[i];
         s.life -= 1;
         if (s.life <= 0) {
@@ -96,21 +95,20 @@ export function GlitterCursor() {
         s.angle += s.spin;
         const t = s.life / s.maxLife;
         const twinkle = 0.6 + 0.4 * Math.sin((s.maxLife - s.life) * 0.6 + s.hue);
-        const alpha = t * twinkle;
+        const alpha = t * twinkle * 0.7;
         if (s.star) {
           drawStar(s, alpha);
         } else {
-          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 2.4);
-          g.addColorStop(0, `hsla(${s.hue}, 100%, 80%, ${alpha})`);
-          g.addColorStop(0.4, `hsla(${s.hue}, 95%, 55%, ${alpha * 0.6})`);
-          g.addColorStop(1, `hsla(${s.hue}, 90%, 40%, 0)`);
+          const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 2);
+          g.addColorStop(0, `hsla(${s.hue}, 75%, 50%, ${alpha})`);
+          g.addColorStop(0.45, `hsla(${s.hue}, 80%, 32%, ${alpha * 0.5})`);
+          g.addColorStop(1, `hsla(${s.hue}, 80%, 20%, 0)`);
           ctx.fillStyle = g;
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.size * 2.4, 0, Math.PI * 2);
+          ctx.arc(s.x, s.y, s.size * 2, 0, Math.PI * 2);
           ctx.fill();
         }
       }
-      ctx.globalCompositeOperation = 'source-over';
       if (sparkles.length) {
         frame = requestAnimationFrame(tick);
       } else {
@@ -128,13 +126,13 @@ export function GlitterCursor() {
     const onMove = (x: number, y: number) => {
       const dist = last.x < 0 ? 0 : Math.hypot(x - last.x, y - last.y);
       last = { x, y };
-      spawn(x, y, Math.min(6, 1 + Math.floor(dist / 8)));
+      spawn(x, y, Math.min(3, 1 + Math.floor(dist / 14)));
       start();
     };
 
     const onPointerMove = (e: PointerEvent) => onMove(e.clientX, e.clientY);
     const onPointerDown = (e: PointerEvent) => {
-      spawn(e.clientX, e.clientY, 18);
+      spawn(e.clientX, e.clientY, 10);
       start();
     };
 

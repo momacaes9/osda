@@ -1,7 +1,7 @@
 export type Language = 'en' | 'pt';
 
 const en = {
-    nav: { how: 'How It Works', benefits: 'Benefits', login: 'Login', register: 'Register', dashboard: 'My results', logout: 'Logout', chat: 'AI Chat' },
+    nav: { how: 'How It Works', benefits: 'Benefits', team: 'Team', login: 'Login', register: 'Register', dashboard: 'My results', logout: 'Logout', chat: 'AI Chat' },
     hero: {
       title1: 'Make Your Lifestyle',
       title2: 'Sustainable',
@@ -93,6 +93,15 @@ const en = {
       close: 'Close chat',
       clear: 'Clear',
     },
+    awards: {
+      title: 'Recognition',
+      items: [
+        { icon: '🏆', title: 'PFF25 — Pitch for the Future', text: 'Winners' },
+        { icon: '🎓', title: 'GYC Recognition', text: 'University of Toronto · 2026' },
+      ],
+    },
+    team: { title: 'Meet the team', subtitle: 'The people behind OSDA — One Step Drives All.', linkedin: 'LinkedIn profile of' },
+    follow: { title: 'Follow OSDA', instagram: 'Instagram', linkedin: 'LinkedIn' },
     footer: 'Built with 💚 by the OSDA team — for a more sustainable world.',
     levels: { beginner: 'Beginner', aware: 'Aware', committed: 'Committed', advanced: 'Advanced', expert: 'Expert' },
     errors: { generic: 'Something went wrong. Please try again.' },
@@ -101,7 +110,7 @@ const en = {
 export type Translation = typeof en;
 
 const pt: Translation = {
-    nav: { how: 'Como Funciona', benefits: 'Benefícios', login: 'Entrar', register: 'Cadastrar', dashboard: 'Meus resultados', logout: 'Sair', chat: 'Chat IA' },
+    nav: { how: 'Como Funciona', benefits: 'Benefícios', team: 'Time', login: 'Entrar', register: 'Cadastrar', dashboard: 'Meus resultados', logout: 'Sair', chat: 'Chat IA' },
     hero: {
       title1: 'Torne Seu Estilo de Vida',
       title2: 'Sustentável',
@@ -193,6 +202,15 @@ const pt: Translation = {
       close: 'Fechar chat',
       clear: 'Limpar',
     },
+    awards: {
+      title: 'Reconhecimentos',
+      items: [
+        { icon: '🏆', title: 'PFF25 — Pitch for the Future', text: 'Vencedoras' },
+        { icon: '🎓', title: 'Reconhecimento GYC', text: 'University of Toronto · 2026' },
+      ],
+    },
+    team: { title: 'Conheça o time', subtitle: 'As pessoas por trás da OSDA — Um Passo Impulsiona Tudo.', linkedin: 'Perfil no LinkedIn de' },
+    follow: { title: 'Siga a OSDA', instagram: 'Instagram', linkedin: 'LinkedIn' },
     footer: 'Feito com 💚 pela equipe OSDA — por um mundo mais sustentável.',
     levels: { beginner: 'Iniciante', aware: 'Consciente', committed: 'Comprometido', advanced: 'Avançado', expert: 'Expert' },
     errors: { generic: 'Algo deu errado. Tente novamente.' },
